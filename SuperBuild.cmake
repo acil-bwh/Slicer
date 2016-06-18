@@ -389,6 +389,31 @@ endforeach()
 endif()
 list_conditional_append(Slicer_BUILD_SlicerDMRI Slicer_REMOTE_DEPENDENCIES SlicerDMRI)
 
+#-------------------------------------------------------------------------------
+# Remote module for Chest Imaging Platform
+#-------------------------------------------------------------------------------
+set(CIP_options
+  CIP_SUPERBUILD:BOOL=OFF
+  CIP_INTEGRATE_WITH_SLICER:BOOL=ON
+  CIP_BUILD_TESTING_PYTHON:BOOL=OFF # to exclude cip_python from CIP build
+  BUILD_TESTING:BOOL=OFF
+  CIP_CLI_LIBRARY_OUTPUT_DIRECTORY:PATH=${CMAKE_BINARY_DIR}/${Slicer_BINARY_INNER_SUBDIR}/${Slicer_CLIMODULES_LIB_DIR}
+  CIP_CLI_ARCHIVE_OUTPUT_DIRECTORY:PATH=${CMAKE_BINARY_DIR}/${Slicer_BINARY_INNER_SUBDIR}/${Slicer_CLIMODULES_LIB_DIR}
+  CIP_CLI_RUNTIME_OUTPUT_DIRECTORY:PATH=${CMAKE_BINARY_DIR}/${Slicer_BINARY_INNER_SUBDIR}/${Slicer_CLIMODULES_BIN_DIR}
+  CIP_CLI_INSTALL_LIBRARY_DESTINATION:PATH=${Slicer_INSTALL_CLIMODULES_LIB_DIR}
+  CIP_CLI_INSTALL_ARCHIVE_DESTINATION:PATH=${Slicer_INSTALL_CLIMODULES_LIB_DIR}
+  CIP_CLI_INSTALL_RUNTIME_DESTINATION:PATH=${Slicer_INSTALL_CLIMODULES_BIN_DIR}
+  )
+Slicer_Remote_Add(CIP
+  GIT_REPOSITORY "${git_protocol}://github.com/acil-bwh/ChestImagingPlatform.git"
+  GIT_TAG "f6f3ffdfe1b6438abb0c22a8b6d3e541814fdf73" # Slicer-CIP branch
+  OPTION_NAME Slicer_BUILD_CIP
+  OPTION_DEPENDS "Slicer_BUILD_CLI_SUPPORT;Slicer_BUILD_CLI"
+  LABELS REMOTE_MODULE
+  VARS ${CIP_options}
+  )
+list_conditional_append(Slicer_BUILD_CIP Slicer_REMOTE_DEPENDENCIES CIP)
+
 #-----------------------------------------------------------------------------
 # Define list of additional options used to configure Slicer
 #------------------------------------------------------------------------------
