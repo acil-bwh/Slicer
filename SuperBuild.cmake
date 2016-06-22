@@ -406,13 +406,29 @@ set(CIP_options
   )
 Slicer_Remote_Add(CIP
   GIT_REPOSITORY "${git_protocol}://github.com/acil-bwh/ChestImagingPlatform.git"
-  GIT_TAG "f6f3ffdfe1b6438abb0c22a8b6d3e541814fdf73" # Slicer-CIP branch
+  GIT_TAG Slicer-CIP # Slicer-CIP branch
   OPTION_NAME Slicer_BUILD_CIP
   OPTION_DEPENDS "Slicer_BUILD_CLI_SUPPORT;Slicer_BUILD_CLI"
   LABELS REMOTE_MODULE
   VARS ${CIP_options}
   )
 list_conditional_append(Slicer_BUILD_CIP Slicer_REMOTE_DEPENDENCIES CIP)
+
+#-------------------------------------------------------------------------------
+# Remote module for SlicerCIP
+#-------------------------------------------------------------------------------
+set(SlicerCIP_options
+  Chest_Imaging_Platform_SUPERBUILD:BOOL=OFF
+  )
+Slicer_Remote_Add(SlicerCIP
+  GIT_REPOSITORY "${git_protocol}://github.com/acil-bwh/SlicerCIP.git"
+  GIT_TAG Slicer-CIP # Slicer-CIP branch
+  OPTION_NAME Slicer_BUILD_SlicerCIP
+  OPTION_DEPENDS "Slicer_BUILD_CLI_SUPPORT;Slicer_BUILD_CLI"
+  LABELS REMOTE_MODULE
+  VARS ${SlicerCIP_options}
+  )
+list_conditional_append(Slicer_BUILD_SlicerCIP Slicer_REMOTE_DEPENDENCIES SlicerCIP)
 
 #-----------------------------------------------------------------------------
 # Define list of additional options used to configure Slicer
